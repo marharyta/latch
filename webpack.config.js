@@ -1,4 +1,6 @@
 const path = require("path");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const combineLoaders = require("webpack-combine-loaders");
 
 module.exports = {
   entry: "./src/index.js",
@@ -15,9 +17,33 @@ module.exports = {
         query: {
           presets: ["es2015", "react"]
         }
+      },
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract(
+          // combineLoaders([
+          //   {
+          //     loader: "style-loader"
+          //   },
+          //   {
+          //     loader: "css-loader",
+          //     query: {
+          //       modules: true,
+          //       localIdentName: "[name]__[local]___[hash:base64:5]"
+          //     }
+          //   }
+          //   // {
+          //   //   loader: "sass-loader"
+          //   // }
+          // ])
+          {
+            use: "css-loader"
+          }
+        )
       }
     ]
   },
+  plugins: [new ExtractTextPlugin("styles.css")],
   resolve: {
     modules: [path.join(__dirname, "node_modules")]
   },
