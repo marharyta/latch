@@ -1,9 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
 const Test = () => <div> Hello </div>;
 
-ReactDOM.render(
-  <Test />,
-  document.getElementById('root'),
-);
+ReactDOM.render(<Test />, document.getElementById("root"));
