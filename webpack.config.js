@@ -1,31 +1,34 @@
-const path = require('path');
-const webpack = require('webpack');
+const path = require("path");
 
 module.exports = {
-  entry: './src/index.js',
+  entry: "./src/index.js",
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'main.js'
+    path: path.resolve(__dirname, "build"),
+    filename: "main.js"
   },
   watch: true,
   module: {
     rules: [
       {
         test: /\.js$/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
         query: {
-          presets: ['es2015', 'react']
+          presets: ["es2015", "react"]
         }
       }
     ]
   },
   resolve: {
-    modules: [
-      path.join(__dirname, 'node_modules'),
-    ],
+    modules: [path.join(__dirname, "node_modules")]
   },
   stats: {
     colors: true
   },
-  devtool: 'source-map'
+  devServer: {
+    contentBase: path.join(__dirname, "./"),
+    compress: true,
+    port: 9000,
+    hot: true
+  },
+  devtool: "source-map"
 };
