@@ -1,9 +1,11 @@
 const path = require("path");
-// const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 // const combineLoaders = require("webpack-combine-loaders");
 
+const extractSass = new ExtractTextPlugin("style.css");
+
 module.exports = {
-  entry: "./src/index.js",
+  entry: ["./src/index.js", "./src/index.scss"],
   output: {
     path: path.resolve(__dirname, "build"),
     filename: "main.js"
@@ -17,27 +19,14 @@ module.exports = {
         query: {
           presets: ["es2015", "react"]
         }
+      },
+      {
+        test: /\.scss$/i,
+        use: extractSass.extract(["css-loader", "sass-loader"])
       }
-      // {
-      //   test: /\.css$/,
-      //   loader: ExtractTextPlugin.extract(
-      //     combineLoaders([
-      //       {
-      //         loader: "style-loader"
-      //       },
-      //       {
-      //         loader: "css-loader",
-      //         query: {
-      //           modules: true,
-      //           localIdentName: "[name]__[local]___[hash:base64:5]"
-      //         }
-      //       }
-      //     ])
-      //   )
-      // }
     ]
   },
-  // plugins: [new ExtractTextPlugin("styles.css")],
+  plugins: [extractSass],
   resolve: {
     modules: [path.join(__dirname, "node_modules")]
   },
@@ -45,10 +34,8 @@ module.exports = {
     colors: true
   },
   devServer: {
-    contentBase: path.join(__dirname, "./"),
     compress: true,
-    port: 9000,
-    hot: true
+    port: 9000
   },
   devtool: "source-map"
 };
